@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="说太难了会越说越难,要说这也太简单了(　o=^•ェ•)o　┏━┓">
+<meta name="description" content="说太难了会越说越难,要说这也太简单了(o=^•ェ•)o　┏━┓">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Upload Labs 难产辽">
 <meta property="og:url" content="http://Kaeeee.github.io/2019/08/29/Upload-Labs-难产辽/index.html">
 <meta property="og:site_name" content="从零开始的Kae">
-<meta property="og:description" content="说太难了会越说越难,要说这也太简单了(　o=^•ェ•)o　┏━┓">
+<meta property="og:description" content="说太难了会越说越难,要说这也太简单了(o=^•ェ•)o　┏━┓">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/29/mqhc8S.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/29/mqhqv4.png">
@@ -97,10 +97,10 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/29/mqIujg.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/29/mq4vQg.md.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/29/mq5pes.png">
-<meta property="og:updated_time" content="2019-08-29T10:31:58.344Z">
+<meta property="og:updated_time" content="2019-08-29T10:34:33.912Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Upload Labs 难产辽">
-<meta name="twitter:description" content="说太难了会越说越难,要说这也太简单了(　o=^•ェ•)o　┏━┓">
+<meta name="twitter:description" content="说太难了会越说越难,要说这也太简单了(o=^•ェ•)o　┏━┓">
 <meta name="twitter:image" content="https://s2.ax1x.com/2019/08/29/mqhc8S.png">
 
 
@@ -342,7 +342,7 @@
       
 
       
-        <h1 id="说太难了会越说越难-要说这也太简单了-o-•ェ•-o-┏━┓"><a href="#说太难了会越说越难-要说这也太简单了-o-•ェ•-o-┏━┓" class="headerlink" title="说太难了会越说越难,要说这也太简单了(　o=^•ェ•)o　┏━┓"></a>说太难了会越说越难,要说这也太简单了(　o=^•ェ•)o　┏━┓</h1><a id="more"></a>
+        <h1 id="说太难了会越说越难-要说这也太简单了-o-•ェ•-o-┏━┓"><a href="#说太难了会越说越难-要说这也太简单了-o-•ェ•-o-┏━┓" class="headerlink" title="说太难了会越说越难,要说这也太简单了(o=^•ェ•)o　┏━┓"></a>说太难了会越说越难,要说这也太简单了(o=^•ェ•)o　┏━┓</h1><a id="more"></a>
 <h2 id="写在前面，方便老年痴呆患者查阅"><a href="#写在前面，方便老年痴呆患者查阅" class="headerlink" title="写在前面，方便老年痴呆患者查阅"></a>写在前面，方便老年痴呆患者查阅</h2><p>文件上传方法：</p>
 <ul>
 <li>js验证，禁用js，或者上传合法后缀抓包修改</li>
@@ -353,8 +353,9 @@
 <li>空字符，00截断，windows自动去除后缀名末尾的.</li>
 <li>针对型构造</li>
 <li>图片马（copy 1.jpg/a+2.php shell.jpg或者IDAT中写马）</li>
-<li>条件竞争<h2 id="Pass-01"><a href="#Pass-01" class="headerlink" title="Pass-01"></a>Pass-01</h2>尝试上传一句话木马，要求只能上传图片，想着上传php文件再抓包修改类型，但是前端就验证了后缀名。将后缀名改成.php.jpg抓包修改，菜刀连接还是不行，估计还是按照图片格式解析的。查看wp嘿嘿。</li>
+<li>条件竞争</li>
 </ul>
+<h2 id="Pass-01"><a href="#Pass-01" class="headerlink" title="Pass-01"></a>Pass-01</h2><p>尝试上传一句话木马，要求只能上传图片，想着上传php文件再抓包修改类型，但是前端就验证了后缀名。将后缀名改成.php.jpg抓包修改，菜刀连接还是不行，估计还是按照图片格式解析的。查看wp嘿嘿。</p>
 <p>wp写的修改前端代码，但是还是不行呢，即便在白名单上加上了.php也还是会报错，不知道怎么回事。<br><img src="https://s2.ax1x.com/2019/08/29/mqhc8S.png" alt="mqhc8S.png"></p>
 <p>在网上搜索了方法和我之前用的原理是一样的，菜刀状态码200没问题但是连接不上，我不知道为什么，查看文件目录也是上传上去了的。脑瓜几疼。。。<br><img src="https://s2.ax1x.com/2019/08/29/mqhqv4.png" alt="mqhqv4.png"><br><a href="https://imgchr.com/i/mqhXr9" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2019/08/29/mqhXr9.png" alt="mqhXr9.png"></a></p>
 <p>upload目录拒绝访问<br><img src="https://s2.ax1x.com/2019/08/29/mq4C8O.png" alt="mq4C8O.png"><br>解决方法：<br>在phpstusy其他选项菜单里phpstudy设置，允许目录列表打勾。</p>
@@ -567,7 +568,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#说太难了会越说越难-要说这也太简单了-o-•ェ•-o-┏━┓"><span class="nav-number">1.</span> <span class="nav-text">说太难了会越说越难,要说这也太简单了(　o=^•ェ•)o　┏━┓</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面，方便老年痴呆患者查阅"><span class="nav-number">1.1.</span> <span class="nav-text">写在前面，方便老年痴呆患者查阅</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-01"><span class="nav-number">1.2.</span> <span class="nav-text">Pass-01</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-02"><span class="nav-number">1.3.</span> <span class="nav-text">Pass-02</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-03"><span class="nav-number">1.4.</span> <span class="nav-text">Pass-03</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-04"><span class="nav-number">1.5.</span> <span class="nav-text">Pass-04</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-05"><span class="nav-number">1.6.</span> <span class="nav-text">Pass-05</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-06"><span class="nav-number">1.7.</span> <span class="nav-text">Pass-06</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-07"><span class="nav-number">1.8.</span> <span class="nav-text">Pass-07</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-08"><span class="nav-number">1.9.</span> <span class="nav-text">Pass-08</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-09"><span class="nav-number">1.10.</span> <span class="nav-text">Pass-09</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-10"><span class="nav-number">1.11.</span> <span class="nav-text">Pass-10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-11"><span class="nav-number">1.12.</span> <span class="nav-text">Pass-11</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-12"><span class="nav-number">1.13.</span> <span class="nav-text">Pass-12</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-13"><span class="nav-number">1.14.</span> <span class="nav-text">Pass-13</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-14"><span class="nav-number">1.15.</span> <span class="nav-text">Pass-14</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-15"><span class="nav-number">1.16.</span> <span class="nav-text">Pass-15</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-16"><span class="nav-number">1.17.</span> <span class="nav-text">Pass-16</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-17"><span class="nav-number">1.18.</span> <span class="nav-text">Pass-17</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-18"><span class="nav-number">1.19.</span> <span class="nav-text">Pass-18</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-19"><span class="nav-number">1.20.</span> <span class="nav-text">Pass-19</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#说太难了会越说越难-要说这也太简单了-o-•ェ•-o-┏━┓"><span class="nav-number">1.</span> <span class="nav-text">说太难了会越说越难,要说这也太简单了(o=^•ェ•)o　┏━┓</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面，方便老年痴呆患者查阅"><span class="nav-number">1.1.</span> <span class="nav-text">写在前面，方便老年痴呆患者查阅</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-01"><span class="nav-number">1.2.</span> <span class="nav-text">Pass-01</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-02"><span class="nav-number">1.3.</span> <span class="nav-text">Pass-02</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-03"><span class="nav-number">1.4.</span> <span class="nav-text">Pass-03</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-04"><span class="nav-number">1.5.</span> <span class="nav-text">Pass-04</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-05"><span class="nav-number">1.6.</span> <span class="nav-text">Pass-05</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-06"><span class="nav-number">1.7.</span> <span class="nav-text">Pass-06</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-07"><span class="nav-number">1.8.</span> <span class="nav-text">Pass-07</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-08"><span class="nav-number">1.9.</span> <span class="nav-text">Pass-08</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-09"><span class="nav-number">1.10.</span> <span class="nav-text">Pass-09</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-10"><span class="nav-number">1.11.</span> <span class="nav-text">Pass-10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-11"><span class="nav-number">1.12.</span> <span class="nav-text">Pass-11</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-12"><span class="nav-number">1.13.</span> <span class="nav-text">Pass-12</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-13"><span class="nav-number">1.14.</span> <span class="nav-text">Pass-13</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-14"><span class="nav-number">1.15.</span> <span class="nav-text">Pass-14</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-15"><span class="nav-number">1.16.</span> <span class="nav-text">Pass-15</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-16"><span class="nav-number">1.17.</span> <span class="nav-text">Pass-16</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-17"><span class="nav-number">1.18.</span> <span class="nav-text">Pass-17</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-18"><span class="nav-number">1.19.</span> <span class="nav-text">Pass-18</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-19"><span class="nav-number">1.20.</span> <span class="nav-text">Pass-19</span></a></li></ol></li></ol></div>
             
 
           </div>
